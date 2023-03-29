@@ -7,9 +7,20 @@ they had used Layerwise LR Decay technique for the Adam optimizer to prevent Cat
 This repo contains the implementation of Layer-wise LR Decay for Adam, with new Optimizer API that had been proposed in TensorFlow 2.11.
 
 ## Usage
+
+Installations:
 ```bash
-$ pip install adam-lr-decay
+$ pip install adam-lr-decay  # this method does not install tensorflow
 ```
+For CPU:
+```bash
+$ pip install adam-lr-decay[cpu]  # this method installs tensorflow-cpu>=2.11
+```
+For GPU:
+```bash
+$ pip install adam-lr-decay[gpu]  # this method installs tensorflow>2.11
+```
+
 ```python
 from tensorflow.keras import layers, models
 from adam_lr_decay import AdamLRDecay
