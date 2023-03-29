@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='adam-lr-decay',
     packages=find_packages(exclude=[]),
-    version='0.0.1',
+    version='0.0.4',
     license='MIT',
     description='Adam Layer-wise LR Decay',
     author='OrigamiDream',
