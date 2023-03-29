@@ -18,7 +18,7 @@ $ pip install adam-lr-decay[cpu]  # this method installs tensorflow-cpu>=2.11
 ```
 For GPU:
 ```bash
-$ pip install adam-lr-decay[gpu]  # this method installs tensorflow>2.11
+$ pip install adam-lr-decay[gpu]  # this method installs tensorflow>=2.11
 ```
 
 ```python
