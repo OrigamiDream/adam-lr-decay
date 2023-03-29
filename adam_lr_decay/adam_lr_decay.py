@@ -1,8 +1,11 @@
 import re
-import tensorflow as tf
-
 from typing import Union
-from tensorflow.keras import optimizers
+
+try:
+    import tensorflow as tf
+    from tensorflow.keras import optimizers
+except ImportError as e:
+    raise ImportError('You must install `tensorflow>=2.11` or `tensorflow-cpu>=2.11` before do your job: {}'.format(e))
 
 
 class AdamLRDecay(optimizers.Adam):
