@@ -5,7 +5,14 @@ try:
     import tensorflow as tf
     from tensorflow.keras import optimizers
 except ImportError as e:
-    raise ImportError('You must install `tensorflow>=2.11` or `tensorflow-cpu>=2.11` before do your job: {}'.format(e))
+    raise ImportError('You must install `tensorflow>=2.11` or `tensorflow-cpu>=2.11`: {}'.format(e))
+
+from packaging import version
+
+if version.parse(tf.__version__) < version.parse('2.11.0'):
+    raise version.InvalidVersion(
+        'The module must be `tensorflow>=2.11`, but current tensorflow version is `{}`'.format(tf.__version__)
+    )
 
 
 class AdamLRDecay(optimizers.Adam):
