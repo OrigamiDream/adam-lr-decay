@@ -67,17 +67,17 @@ adam.apply_layerwise_lr_decay(var_name_dicts=_get_layer_lrs(0.9, 8))
 The generated decay rate must be looked like this. `0.0` means there is no decay and `1.0` means it is zero learning rate. (non-trainable)
 ```json
 {
-  '/embeddings/': 0.6513215599,
-  '/embeddings_project/': 0.6513215599, 
-  'task_specific/': 0.0, 
-  'encoder/layer_0/': 0.6125795109999999, 
-  'encoder/layer_1/': 0.5695327899999999, 
-  'encoder/layer_2/': 0.5217030999999999, 
-  'encoder/layer_3/': 0.46855899999999995, 
-  'encoder/layer_4/': 0.40950999999999993, 
-  'encoder/layer_5/': 0.3439, 
-  'encoder/layer_6/': 0.2709999999999999, 
-  'encoder/layer_7/': 0.18999999999999995
+  "/embeddings/": 0.6513215599,
+  "/embeddings_project/": 0.6513215599, 
+  "task_specific/": 0.0, 
+  "encoder/layer_0/": 0.6125795109999999, 
+  "encoder/layer_1/": 0.5695327899999999, 
+  "encoder/layer_2/": 0.5217030999999999, 
+  "encoder/layer_3/": 0.46855899999999995, 
+  "encoder/layer_4/": 0.40950999999999993, 
+  "encoder/layer_5/": 0.3439, 
+  "encoder/layer_6/": 0.2709999999999999, 
+  "encoder/layer_7/": 0.18999999999999995
 }
 ```
 
