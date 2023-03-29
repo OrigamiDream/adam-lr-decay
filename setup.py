@@ -8,10 +8,16 @@ setup(
     description='Adam Layer-wise LR Decay',
     author='OrigamiDream',
     author_email='hello@origamidream.me',
+    long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/OrigamiDream/adam-lr-decay',
+    python_requires='>=3.8.0',
+    extras_require={
+        'gpu': ['tensorflow>=2.11'],
+        'cpu': ['tensorflow-cpu>=2.11']
+    },
     install_requires=[
-        'tensorflow>=2.11'
+        'packaging'
     ],
     keywords=[
         'machine learning',
