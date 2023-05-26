@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='adam-lr-decay',
     packages=find_packages(exclude=[]),
-    version='0.0.5',
+    version='0.0.6',
     license='MIT',
     description='Adam Layer-wise LR Decay',
     author='OrigamiDream',
@@ -17,7 +17,8 @@ setup(
         'cpu': ['tensorflow-cpu>=2.11']
     },
     install_requires=[
-        'packaging'
+        'packaging',
+        'flowchain>=0.0.4'
     ],
     keywords=[
         'machine learning',

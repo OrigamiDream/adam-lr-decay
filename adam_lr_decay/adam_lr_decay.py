@@ -1,4 +1,5 @@
 import re
+from flowchain import enable_tensor_chaining
 from typing import Union
 
 try:
@@ -13,6 +14,8 @@ if version.parse(tf.__version__) < version.parse('2.11.0'):
     raise version.InvalidVersion(
         'The tensorflow must be greater than or equal to 2.11, but current version is `{}`'.format(tf.__version__)
     )
+
+enable_tensor_chaining()
 
 
 class AdamLRDecay(optimizers.Adam):
@@ -79,25 +82,25 @@ class AdamLRDecay(optimizers.Adam):
         return None
 
     def _calculate_learning_rate(self, variable):
-        lr = tf.cast(self.learning_rate, variable.dtype)
+        lr = self.learning_rate.cast(variable.dtype)
         decay_rate = self._use_layerwise_lr_decay(variable)
         if decay_rate is not None:
-            decay_rate = tf.cast(decay_rate, variable.dtype)
+            decay_rate = decay_rate.cast(variable.dtype)
             return lr * (1. - decay_rate)
         return lr
 
     def update_step(self, gradient, variable):
         """Update step given gradient and the associated model variable."""
         lr = self._calculate_learning_rate(variable)
-        local_step = tf.cast(self.iterations + 1, variable.dtype)
-        beta_1_power = tf.pow(tf.cast(self.beta_1, variable.dtype), local_step)
-        beta_2_power = tf.pow(tf.cast(self.beta_2, variable.dtype), local_step)
+        local_step = (self.iterations + 1).cast(variable.dtype)
+        beta_1_power = self.beta_1.cast(variable.dtype) ** local_step
+        beta_2_power = self.beta_2.cast(variable.dtype) ** local_step
 
         var_key = self._var_key(variable)
         m = self._momentums[self._index_dict[var_key]]
         v = self._velocities[self._index_dict[var_key]]
 
-        alpha = lr * tf.sqrt(1 - beta_2_power) / (1 - beta_1_power)
+        alpha = lr * (1 - beta_2_power).sqrt() / (1 - beta_1_power)
 
         if isinstance(gradient, tf.IndexedSlices):
             # Sparse gradients.
@@ -110,24 +113,24 @@ class AdamLRDecay(optimizers.Adam):
             v.assign_add(-v * (1 - self.beta_2))
             v.scatter_add(
                 tf.IndexedSlices(
-                    tf.square(gradient.values) * (1 - self.beta_2),
+                    gradient.values.square() * (1 - self.beta_2),
                     gradient.indices,
-                    )
+                )
             )
             if self.amsgrad:
                 v_hat = self._velocity_hats[self._index_dict[var_key]]
                 v_hat.assign(tf.maximum(v_hat, v))
                 v = v_hat
-            variable.assign_sub((m * alpha) / (tf.sqrt(v) + self.epsilon))
+            variable.assign_sub((m * alpha) / (v.sqrt() + self.epsilon))
         else:
             # Dense gradients.
             m.assign_add((gradient - m) * (1 - self.beta_1))
-            v.assign_add((tf.square(gradient) - v) * (1 - self.beta_2))
+            v.assign_add((gradient.square() - v) * (1 - self.beta_2))
             if self.amsgrad:
                 v_hat = self._velocity_hats[self._index_dict[var_key]]
                 v_hat.assign(tf.maximum(v_hat, v))
                 v = v_hat
-            variable.assign_sub((m * alpha) / (tf.sqrt(v) + self.epsilon))
+            variable.assign_sub((m * alpha) / (v.sqrt() + self.epsilon))
 
     def _apply_weight_decay(self, variables):
         if self.weight_decay is None:
@@ -135,7 +138,7 @@ class AdamLRDecay(optimizers.Adam):
         for variable in variables:
             if self._use_weight_decay(variable):
                 lr = self._calculate_learning_rate(variable)
-                wd = tf.cast(self.weight_decay, variable.dtype)
+                wd = self.weight_decay.cast(variable.dtype)
                 variable.assign_sub(variable * wd * lr)
 
     def get_config(self):
