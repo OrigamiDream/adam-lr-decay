@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "adam-lr-decay"
+version = "0.0.7"
+description = "Adam Layer-wise LR Decay"
+authors = ["OrigamiDream <hello@origamidream.me>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/OrigamiDream/adam-lr-decay"
+packages = [{include = "adam_lr_decay"}]
+keywords = [
+    "machine-learning",
+    "deep-learning",
+    "tensorflow",
+    "optimizers"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.11"
+packaging = "*"
+flowchain = "^0.0.4"
+tensorflow = { version = ">=2.11,<2.12", optional = true }
+tensorflow-cpu = { version = ">=2.11,<2.12", optional = true }
+tensorflow-macos = { version = "2.11.0", optional = true }
+tensorflow-metal = { version = "0.7.0", optional = true }
+
+[tool.poetry.extras]
+gpu = ["tensorflow"]
+cpu = ["tensorflow-cpu"]
+mac = ["tensorflow-macos", "tensorflow-metal"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
