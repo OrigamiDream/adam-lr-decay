@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "adam-lr-decay"
-version = "0.0.7"
+version = "0.0.8"
 description = "Adam Layer-wise LR Decay"
 authors = ["OrigamiDream <hello@origamidream.me>"]
 license = "MIT"
